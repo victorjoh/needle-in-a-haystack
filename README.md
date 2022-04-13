@@ -9,3 +9,5 @@ dotnet run
 
 
 how to debug in vscode https://stackoverflow.com/a/70283792
+
+dotnet run --project NeedleInAHaystack /home/victor/Code/needle-in-a-haystack/NeedleInAHaystack.Tests/empty.txt
