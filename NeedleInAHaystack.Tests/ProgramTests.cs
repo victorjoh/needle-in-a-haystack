@@ -19,7 +19,7 @@ public class ProgramTests
         using (StringWriter output = new StringWriter())
         {
             Console.SetOut(output);
-            Program.Main(new string[] { "resources/" + inputFile });
+            Program.Main(new string[] { inputFile });
             output.ToString().Should().Be("found " + matches + Environment.NewLine);
         }
     }
