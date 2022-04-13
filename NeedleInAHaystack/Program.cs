@@ -23,7 +23,7 @@ namespace ConsoleApp1
                 line = file.ReadLine();
                 if (line == null) break;
                 if (line.Contains(name))
-                    counter++;  
+                    counter++;
             }
             Console.WriteLine("found " + counter);
         }
