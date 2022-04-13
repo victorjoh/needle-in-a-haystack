@@ -15,13 +15,13 @@ public class ProgramTests
     [TestCase("two-matches.xml", 2)]
     public void Should_write_how_many_times_the_file_root_name_occurs_in_the_file(
         string inputFile,
-        int matches)
+        int expectedMatches)
     {
         using (StringWriter output = new StringWriter())
         {
             Console.SetOut(output);
             Program.Main(new string[] { inputFile });
-            output.ToString().Should().Be("found " + matches + Environment.NewLine);
+            output.ToString().Should().Be("found " + expectedMatches + Environment.NewLine);
         }
     }
 }
