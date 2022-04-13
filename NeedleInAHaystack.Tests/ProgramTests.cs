@@ -12,6 +12,7 @@ public class ProgramTests
     [Test]
     [TestCase("empty.txt", 0)]
     [TestCase("one-match.json", 1)]
+    [TestCase("two-matches.xml", 2)]
     public void Should_write_how_many_times_the_file_root_name_occurs_in_the_file(
         string inputFile,
         int matches)

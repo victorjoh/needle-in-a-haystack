@@ -6,3 +6,6 @@ sudo dnf copr enable @dotnet-sig/dotnet
 sudo dnf install dotnet
 
 dotnet run
+
+
+how to debug in vscode https://stackoverflow.com/a/70283792
