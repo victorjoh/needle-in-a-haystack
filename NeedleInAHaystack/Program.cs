@@ -29,6 +29,12 @@ public static class Program
         }
 
         string baseFilename = Path.GetFileNameWithoutExtension(args[0]);
+        if (baseFilename == "") 
+        {
+            string fullPath = Path.GetFullPath(args[0]);
+            Console.WriteLine($"The file '{fullPath}' does not have a base filename. Aborting.");
+            return;
+        }
 
         Console.WriteLine($"found {fileContents.CountOccurencesOf(baseFilename)}");
     }
@@ -39,8 +45,8 @@ public static class Program
         int nextOccurenceStart = haystack.IndexOf(needle, 0);
         while (nextOccurenceStart != -1)
         {
-            nextOccurenceStart = haystack.IndexOf(needle, nextOccurenceStart + needle.Length);
             nbrOfOccurences++;
+            nextOccurenceStart = haystack.IndexOf(needle, nextOccurenceStart + needle.Length);
         }
         return nbrOfOccurences;
     }

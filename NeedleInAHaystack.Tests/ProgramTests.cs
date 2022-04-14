@@ -58,8 +58,9 @@ public class ProgramTests
     [Test]
     public void Should_give_error_when_file_does_not_exist()
     {
+        string fullPath = Path.GetFullPath(TestResource("non-existing-file.txt"));
         ConsoleOutputOf(() => Program.Main(new string[] { TestResource("non-existing-file.txt") }))
-                .Should().Be(SingleLine($"Could not find file '{Path.GetFullPath(TestResource("non-existing-file.txt"))}'."));
+                .Should().Be(SingleLine($"Could not find file '{fullPath}'."));
     }
 
     [Test]
@@ -88,20 +89,31 @@ public class ProgramTests
     }
 
     [Test]
-    public void Can_not_handle_iso88591_character_encoding() {
+    public void Can_not_handle_iso88591_character_encoding()
+    {
         // The test resource contains one match in iso88591 encoding.
         ConsoleOutputOf(() => Program.Main(new string[] { TestResource("iso88591-åäö.txt") }))
                 .Should().Be(SingleLine("found 0"));
     }
 
     [Test]
-    public void Should_count_multiple_occurences_on_same_line() {
+    public void Should_give_error_when_there_is_no_base_filename()
+    {
+        string fullPath = Path.GetFullPath(TestResource(".txt"));
+        ConsoleOutputOf(() => Program.Main(new string[] { TestResource(".txt") }))
+                .Should().Be(SingleLine($"The file '{fullPath}' does not have a base filename. Aborting."));
+    }
+
+    [Test]
+    public void Should_count_multiple_occurences_on_same_line()
+    {
         "123abc456abc".CountOccurencesOf("abc")
                 .Should().Be(2);
     }
 
     [Test]
-    public void Should_not_count_overlapping_matches() {
+    public void Should_not_count_overlapping_matches()
+    {
         "aaaaaaaaa".CountOccurencesOf("aaa")
                 .Should().Be(3);
     }
