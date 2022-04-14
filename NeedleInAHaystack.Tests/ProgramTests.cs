@@ -10,10 +10,10 @@ public class ProgramTests
 {
 
     [Test]
-    [TestCase("empty.txt", 0)]
-    [TestCase("one-match.json", 1)]
-    [TestCase("two-matches.xml", 2)]
-    public void Should_write_how_many_times_the_file_root_name_occurs_in_the_file(
+    [TestCase("resources/empty.txt", 0)]
+    [TestCase("resources/one-match.json", 1)]
+    [TestCase("resources/two-matches.xml", 2)]
+    public void Should_write_how_many_times_the_base_filename_occurs_in_the_file(
         string inputFile,
         int expectedMatches)
     {

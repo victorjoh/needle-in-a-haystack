@@ -9,12 +9,12 @@ public class Program
 
     public static void Main(string[] args)
     {
-        int pos = args[0].IndexOf('.');
-        string name = args[0].Substring(0, pos);
-        int counter = 0;
+        string filename = Path.GetFileName(args[0]);
+        string baseFilename = filename.Substring(0, filename.IndexOf('.'));
+        int nbrOfMatches = 0;
         foreach (string line in System.IO.File.ReadLines(args[0]))
-            if (line.Contains(name))
-                counter++;
-        Console.WriteLine("found " + counter);
+            if (line.Contains(baseFilename))
+                nbrOfMatches++;
+        Console.WriteLine("found " + nbrOfMatches);
     }
 }

@@ -20,13 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="empty.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="one-match.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="two-matches.xml">
+    <Content Include="resources\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
