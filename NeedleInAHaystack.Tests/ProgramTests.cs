@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using FluentAssertions;
-using NeedleInAHaystack;
 using System.IO;
 using System;
 
@@ -81,7 +80,7 @@ public class ProgramTests
     [TestCase("utf8")]
     [TestCase("utf16le")]
     [TestCase("utf16be")]
-    public void Can_handle_character_encoding(String encoding)
+    public void Can_handle_character_encoding(string encoding)
     {
         // The test resource contains one match in the specified encoding.
         ConsoleOutputOf(() => Program.Main(new string[] { TestResource($"{encoding}-世界您好.txt") }))

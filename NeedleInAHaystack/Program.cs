@@ -1,10 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Linq;
-
-namespace NeedleInAHaystack;
+﻿namespace NeedleInAHaystack;
 
 public static class Program
 {
