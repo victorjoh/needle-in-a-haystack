@@ -1,17 +1,29 @@
-# needle-in-a-haystack
-Finds all occurrences of the base name of a file in that file.
+# Needle in a haystack
+Counts the number of occurrences of the base filename in the contents of a given
+file. For example, given the file `abc.txt`:
+```
+Hello, abc!
+Now I know my abc.
+Good bye!
+```
+then the output will be `found 2`.
 
-I did this on Fedora:
+To run the program, first install dotnet. This is how I did it on Fedora:
+```
 sudo dnf copr enable @dotnet-sig/dotnet
 sudo dnf install dotnet
+```
 
-dotnet run
+then you can run the tests with:
+```
+dotnet test
+```
 
+You can run the program with your own input file like this for example:
+```
+dotnet run --project NeedleInAHaystack NeedleInAHaystack.Tests/resources/two-matches.xml
+```
 
-how to debug in vscode https://stackoverflow.com/a/70283792
-
-dotnet run --project NeedleInAHaystack /home/victor/Code/needle-in-a-haystack/NeedleInAHaystack.Tests/empty.txt
-
-things to test:
-slashes in path
-...
+## Assumptions
+* We only support the following character encodings: uft8, utf16be and uft16le.
+* We have no performance constraints.
