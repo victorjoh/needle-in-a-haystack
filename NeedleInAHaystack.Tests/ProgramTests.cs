@@ -32,6 +32,6 @@ public class ProgramTests
     }
 
     string SingleLine(string contents) {
-        return $"{contents}{Environment.NewLine}";
+        return contents + Environment.NewLine;
     }
 }
