@@ -17,11 +17,21 @@ public class ProgramTests
         string inputFile,
         int expectedMatches)
     {
+        ConsoleOutputOf(() => Program.Main(new string[] { inputFile }))
+                .Should().Be(SingleLine($"found {expectedMatches}"));
+    }
+
+    string ConsoleOutputOf(Action action)
+    {
         using (StringWriter output = new StringWriter())
         {
             Console.SetOut(output);
-            Program.Main(new string[] { inputFile });
-            output.ToString().Should().Be("found " + expectedMatches + Environment.NewLine);
+            action();
+            return output.ToString();
         }
+    }
+
+    string SingleLine(string contents) {
+        return $"{contents}{Environment.NewLine}";
     }
 }
