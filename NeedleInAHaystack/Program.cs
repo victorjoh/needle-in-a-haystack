@@ -2,10 +2,11 @@
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace NeedleInAHaystack;
 
-public class Program
+public static class Program
 {
 
     public static void Main(string[] args)
@@ -29,30 +30,18 @@ public class Program
 
         string baseFilename = Path.GetFileNameWithoutExtension(args[0]);
 
-        Console.WriteLine($"found {FindOccurences.of(baseFilename).within(fileContents)}");
-    }
-}
-
-public class FindOccurences
-{
-    private string needle;
-
-    private FindOccurences(String needle)
-    {
-        this.needle = needle;
+        Console.WriteLine($"found {fileContents.CountOccurencesOf(baseFilename)}");
     }
 
-    public static FindOccurences of(string needle)
-    {
-        return new FindOccurences(needle);
-    }
-
-    public int within(string haystack)
+    public static int CountOccurencesOf(this string haystack, string needle)
     {
         int nbrOfOccurences = 0;
-        foreach (string line in Regex.Split(haystack, "\r\n|\r|\n"))
-            if (line.Contains(needle))
-                nbrOfOccurences++;
+        int nextOccurenceStart = haystack.IndexOf(needle, 0);
+        while (nextOccurenceStart != -1)
+        {
+            nextOccurenceStart = haystack.IndexOf(needle, nextOccurenceStart + needle.Length);
+            nbrOfOccurences++;
+        }
         return nbrOfOccurences;
     }
 }

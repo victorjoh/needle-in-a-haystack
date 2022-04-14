@@ -75,4 +75,16 @@ public class ProgramTests
         ConsoleOutputOf(() => Program.Main(new string[] { }))
                 .Should().Be(SingleLine("Expecting a single path to a file as input argument."));
     }
+
+    [Test]
+    public void Should_count_multiple_occurences_on_same_line() {
+        "123abc456abc".CountOccurencesOf("abc")
+                .Should().Be(2);
+    }
+
+    [Test]
+    public void Should_not_count_overlapping_matches() {
+        "aaaaaaaaa".CountOccurencesOf("aaa")
+                .Should().Be(3);
+    }
 }
