@@ -1,6 +1,6 @@
 # Needle in a haystack
-This program counts the number of occurrences of the base filename in the
-contents of a given file. For example, given the file `abc.txt`:
+This program counts occurrences of the base filename in the contents of a given
+file. For example, given the file `abc.txt`:
 ```
 Hello, abc!
 Now I know my abc.
