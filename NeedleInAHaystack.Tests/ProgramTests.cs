@@ -62,16 +62,17 @@ public class ProgramTests
                 .Should().Be(SingleLine($"Could not find file '{Path.GetFullPath(TestResource("non-existing-file.txt"))}'."));
     }
 
-        [Test]
+    [Test]
     public void Should_give_error_when_trying_to_read_directory()
     {
         ConsoleOutputOf(() => Program.Main(new string[] { "resources" }))
                 .Should().Be(SingleLine($"Access to the path '{Path.GetFullPath("resources")}' is denied."));
     }
 
-    // public void Should_give_error_no_argument_is_passed_to_the_program()
-    // {
-    //     ConsoleOutputOf(() => Program.Main(new string[] { }))
-    //             .Should().Be(SingleLine($"Expecting a path to a file as input argument."));
-    // }
+    [Test]
+    public void Should_give_error_when_no_argument_is_passed_to_the_program()
+    {
+        ConsoleOutputOf(() => Program.Main(new string[] { }))
+                .Should().Be(SingleLine("Expecting a single path to a file as input argument."));
+    }
 }
