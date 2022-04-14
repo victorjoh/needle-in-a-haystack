@@ -54,4 +54,18 @@ public class ProgramTests
         ConsoleOutputOf(() => Program.Main(new string[] { $"resources/../resources/one-match.json" }))
                 .Should().Be(SingleLine("found 1"));
     }
+
+    [Test]
+    public void Should_give_error_when_file_does_not_exist()
+    {
+        ConsoleOutputOf(() => Program.Main(new string[] { TestResource("non-existing-file.txt") }))
+                .Should().Be(SingleLine($"Could not find file '{Path.GetFullPath(TestResource("non-existing-file.txt"))}'."));
+    }
+
+        [Test]
+    public void Should_give_error_when_trying_to_read_directory()
+    {
+        ConsoleOutputOf(() => Program.Main(new string[] { "resources" }))
+                .Should().Be(SingleLine($"Access to the path '{Path.GetFullPath("resources")}' is denied."));
+    }
 }

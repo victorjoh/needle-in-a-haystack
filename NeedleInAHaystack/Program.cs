@@ -11,9 +11,13 @@ public class Program
     {
         string baseFilename = Path.GetFileNameWithoutExtension(args[0]);
         int nbrOfMatches = 0;
-        foreach (string line in System.IO.File.ReadLines(args[0]))
-            if (line.Contains(baseFilename))
-                nbrOfMatches++;
-        Console.WriteLine("found " + nbrOfMatches);
+        try {
+            foreach (string line in File.ReadLines(args[0]))
+                if (line.Contains(baseFilename))
+                    nbrOfMatches++;
+            Console.WriteLine("found " + nbrOfMatches);
+        } catch (Exception e) {
+            Console.WriteLine(e.Message);
+        }
     }
 }
