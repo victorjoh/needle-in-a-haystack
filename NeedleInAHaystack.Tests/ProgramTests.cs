@@ -77,6 +77,24 @@ public class ProgramTests
     }
 
     [Test]
+    [TestCase("utf8")]
+    [TestCase("utf16le")]
+    [TestCase("utf16be")]
+    public void Can_handle_character_encoding(String encoding)
+    {
+        // The test resource contains one match in the specified encoding.
+        ConsoleOutputOf(() => Program.Main(new string[] { TestResource($"{encoding}-世界您好.txt") }))
+                .Should().Be(SingleLine("found 1"));
+    }
+
+    [Test]
+    public void Can_not_handle_iso88591_character_encoding() {
+        // The test resource contains one match in iso88591 encoding.
+        ConsoleOutputOf(() => Program.Main(new string[] { TestResource("iso88591-åäö.txt") }))
+                .Should().Be(SingleLine("found 0"));
+    }
+
+    [Test]
     public void Should_count_multiple_occurences_on_same_line() {
         "123abc456abc".CountOccurencesOf("abc")
                 .Should().Be(2);
