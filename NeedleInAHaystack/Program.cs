@@ -2,6 +2,10 @@
 
 namespace NeedleInAHaystack;
 
+using Contents = String;
+using FilePath = String;
+using BaseFilename = String;
+
 public static class Program
 {
 
@@ -10,38 +14,44 @@ public static class Program
         string output = GetSinglePath(args)
                 .FlatMap(ReadFile)
                 .FlatMap(GetNonEmptyBaseFilename)
-                .Map(textFile => textFile.Contents.CountOccurencesOf(textFile.BaseFilename))
+                .Map(CountOccurences)
                 .Map(nbrOfOccurences => $"found {nbrOfOccurences}")
                 .OrElse(error => error);
         Console.WriteLine(output);
     }
 
-    private static Result<string> GetSinglePath(string[] args)
+    private static Result<FilePath> GetSinglePath(string[] args)
     {
         return args.Length == 1 ?
-                Result<string>.Ok(args[0]) :
-                Result<string>.Fail("Expecting a single path to a file as input argument.");
+                Result<FilePath>.Ok(args[0]) :
+                Result<FilePath>.Fail("Expecting a single path to a file as input argument.");
     }
 
-    private static Result<TextFile> ReadFile(string path)
+    private static Result<(FilePath, Contents)> ReadFile(FilePath path)
     {
         try
         {
-            return Result<TextFile>.Ok(new TextFile(path, File.ReadAllText(path)));
+            return Result<(FilePath, Contents)>.Ok((path, File.ReadAllText(path)));
         }
         catch (Exception e)
         {
-            return Result<TextFile>.Fail(e.Message);
+            return Result<(FilePath, Contents)>.Fail(e.Message);
         }
     }
 
-    private static Result<BaseTextFile> GetNonEmptyBaseFilename(TextFile textFile)
+    private static Result<(BaseFilename, Contents)> GetNonEmptyBaseFilename((FilePath, Contents) textFile)
     {
-        string baseFilename = Path.GetFileNameWithoutExtension(textFile.Path);
+        var (path, contents) = textFile;
+        string baseFilename = Path.GetFileNameWithoutExtension(path);
         return baseFilename != "" ?
-                Result<BaseTextFile>.Ok(new BaseTextFile(baseFilename, textFile.Contents)) :
-                Result<BaseTextFile>.Fail(
-                        $"The file '{Path.GetFullPath(textFile.Path)}' does not have a base filename. Aborting.");
+                Result<(BaseFilename, Contents)>.Ok((baseFilename, contents)) :
+                Result<(BaseFilename, Contents)>.Fail(
+                        $"The file '{Path.GetFullPath(path)}' does not have a base filename. Aborting.");
+    }
+
+    private static int CountOccurences((BaseFilename, Contents) textFile) {
+         var (baseFilename, contents) = textFile;
+         return contents.CountOccurencesOf(baseFilename);
     }
 
     public static int CountOccurencesOf(this string haystack, string needle)
@@ -57,9 +67,6 @@ public static class Program
         return nbrOfOccurences;
     }
 }
-
-readonly record struct TextFile(string Path, string Contents);
-readonly record struct BaseTextFile(string BaseFilename, string Contents);
 
 sealed class Result<T>
 {
