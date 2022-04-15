@@ -87,25 +87,20 @@ sealed class Result<T>
 
     public Result<U> FlatMap<U>(Func<T, Result<U>> mapper)
     {
-        if (success)
-            return mapper.Invoke(value);
-        else
-            return new Result<U>(default(U)!, false, error);
+        return success ?
+                mapper.Invoke(value) :
+                new Result<U>(default(U)!, false, error);
     }
 
     public Result<U> Map<U>(Func<T, U> mapper)
     {
-        if (success)
-            return new Result<U>(mapper.Invoke(value), true, "");
-        else
-            return new Result<U>(default(U)!, false, error);
+        return success ?
+                new Result<U>(mapper.Invoke(value), true, "") :
+                new Result<U>(default(U)!, false, error);
     }
 
     public T OrElse(Func<string, T> other)
     {
-        if (success)
-            return value;
-        else
-            return other.Invoke(error);
+        return success ? value : other.Invoke(error);
     }
 }
