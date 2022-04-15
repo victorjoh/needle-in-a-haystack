@@ -111,6 +111,13 @@ public class ProgramTests
     }
 
     [Test]
+    public void Can_handle_full_path()
+    {
+        ConsoleOutputOf(() => Program.Main(new string[] { Path.GetFullPath(TestResource("one-match.json")) }))
+                .Should().Be(SingleLine("found 1"));
+    }
+
+    [Test]
     public void Should_count_multiple_occurences_on_same_line()
     {
         "123abc456abc".CountOccurencesOf("abc")
