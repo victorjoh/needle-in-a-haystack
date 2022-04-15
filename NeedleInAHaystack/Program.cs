@@ -93,14 +93,14 @@ sealed class Result<T>
     {
         return success ?
                 mapper.Invoke(value) :
-                new Result<U>(default(U)!, false, error);
+                Result<U>.Fail(error);
     }
 
     public Result<U> Map<U>(Func<T, U> mapper)
     {
         return success ?
-                new Result<U>(mapper.Invoke(value), true, "") :
-                new Result<U>(default(U)!, false, error);
+                Result<U>.Ok(mapper.Invoke(value)) :
+                Result<U>.Fail(error);
     }
 
     public T OrElse(Func<string, T> other)
