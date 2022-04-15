@@ -50,7 +50,7 @@ public class ProgramTests
     [Test]
     public void Can_handle_relative_path_dots()
     {
-        ConsoleOutputOf(() => Program.Main(new string[] { $"resources/../resources/one-match.json" }))
+        ConsoleOutputOf(() => Program.Main(new string[] { "resources/../resources/one-match.json" }))
                 .Should().Be(SingleLine("found 1"));
     }
 
@@ -101,6 +101,13 @@ public class ProgramTests
         string fullPath = Path.GetFullPath(TestResource(".txt"));
         ConsoleOutputOf(() => Program.Main(new string[] { TestResource(".txt") }))
                 .Should().Be(SingleLine($"The file '{fullPath}' does not have a base filename. Aborting."));
+    }
+
+    [Test]
+    public void Can_handle_platform_specific_directory_separator_char()
+    {
+        ConsoleOutputOf(() => Program.Main(new string[] { $"resources{Path.DirectorySeparatorChar}one-match.json" }))
+                .Should().Be(SingleLine("found 1"));
     }
 
     [Test]
