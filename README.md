@@ -14,6 +14,9 @@ sudo dnf copr enable @dotnet-sig/dotnet
 sudo dnf install dotnet
 ```
 
+On Windows, [download .NET SDK x64](https://dotnet.microsoft.com/en-us/download)
+and install it.
+
 then you can run the tests with:
 ```
 dotnet test

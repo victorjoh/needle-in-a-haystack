@@ -1,4 +1,4 @@
-﻿namespace NeedleInAHaystack;
+namespace NeedleInAHaystack;
 
 using Contents = String;
 using FilePath = String;
