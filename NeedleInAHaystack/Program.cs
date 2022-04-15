@@ -3,19 +3,20 @@ namespace NeedleInAHaystack;
 using Contents = String;
 using FilePath = String;
 using BaseFilename = String;
+using Error = String;
 
 public static class Program
 {
 
     public static void Main(string[] args)
     {
-        string output = GetSinglePath(args)
+        GetSinglePath(args)
                 .FlatMap(ReadFile)
                 .FlatMap(GetNonEmptyBaseFilename)
-                .Map(CountOccurences)
+                .Map(CountBaseFilenameOccurences)
                 .Map(nbrOfOccurences => $"found {nbrOfOccurences}")
-                .OrElse(error => error);
-        Console.WriteLine(output);
+                .OrElse(error => error)
+                .Consume(Console.WriteLine);
     }
 
     private static Result<FilePath> GetSinglePath(string[] args)
@@ -47,7 +48,7 @@ public static class Program
                         $"The file '{Path.GetFullPath(path)}' does not have a base filename. Aborting.");
     }
 
-    private static int CountOccurences((BaseFilename, Contents) textFile)
+    private static int CountBaseFilenameOccurences((BaseFilename, Contents) textFile)
     {
         var (baseFilename, contents) = textFile;
         return contents.CountOccurencesOf(baseFilename);
@@ -65,22 +66,26 @@ public static class Program
         }
         return nbrOfOccurences;
     }
+
+    private static void Consume<T>(this T value, Action<T> action) {
+        action(value);
+    }
 }
 
 sealed class Result<T>
 {
     private T value;
     private bool success;
-    private string error;
+    private Error error;
 
-    private Result(T value, bool success, string error)
+    private Result(T value, bool success, Error error)
     {
         this.value = value;
         this.success = success;
         this.error = error;
     }
 
-    public static Result<T> Fail(string error)
+    public static Result<T> Fail(Error error)
     {
         return new Result<T>(default(T)!, false, error);
     }
@@ -93,19 +98,19 @@ sealed class Result<T>
     public Result<U> FlatMap<U>(Func<T, Result<U>> mapper)
     {
         return success ?
-                mapper.Invoke(value) :
+                mapper(value) :
                 Result<U>.Fail(error);
     }
 
     public Result<U> Map<U>(Func<T, U> mapper)
     {
         return success ?
-                Result<U>.Ok(mapper.Invoke(value)) :
+                Result<U>.Ok(mapper(value)) :
                 Result<U>.Fail(error);
     }
 
-    public T OrElse(Func<string, T> other)
+    public T OrElse(Func<Error, T> other)
     {
-        return success ? value : other.Invoke(error);
+        return success ? value : other(error);
     }
 }
