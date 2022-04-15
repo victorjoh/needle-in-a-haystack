@@ -1,4 +1,4 @@
-namespace NeedleInAHaystack;
+﻿namespace NeedleInAHaystack;
 
 using Contents = String;
 using FilePath = String;
@@ -13,7 +13,7 @@ public static class Program
         GetSinglePath(args)
                 .FlatMap(ReadFile)
                 .FlatMap(GetNonEmptyBaseFilename)
-                .Map(CountBaseFilenameOccurences)
+                .Map(CountBaseFilenameOccurencesInContents)
                 .Map(nbrOfOccurences => $"found {nbrOfOccurences}")
                 .OrElse(error => error)
                 .Consume(Console.WriteLine);
@@ -48,7 +48,7 @@ public static class Program
                         $"The file '{Path.GetFullPath(path)}' does not have a base filename. Aborting.");
     }
 
-    private static int CountBaseFilenameOccurences((BaseFilename, Contents) textFile)
+    private static int CountBaseFilenameOccurencesInContents((BaseFilename, Contents) textFile)
     {
         var (baseFilename, contents) = textFile;
         return contents.CountOccurencesOf(baseFilename);
