@@ -8,7 +8,7 @@ Good bye!
 ```
 then the output will be `found 2`.
 
-To run the program, first install dotnet. This is how I did it on Fedora:
+To run the program, first install `dotnet`. This is how I did it on Fedora:
 ```
 sudo dnf copr enable @dotnet-sig/dotnet
 sudo dnf install dotnet
@@ -17,12 +17,13 @@ sudo dnf install dotnet
 On Windows, [download .NET SDK x64](https://dotnet.microsoft.com/en-us/download)
 and install it.
 
-then you can run the tests with:
+Then you can run the tests with:
 ```
 dotnet test
 ```
 
-You can run the program with your own input file like this for example:
+You can run the program with your own input file, like we do below with the
+`two-matches.xml` test file:
 ```
 dotnet run --project NeedleInAHaystack NeedleInAHaystack.Tests/resources/two-matches.xml
 ```
