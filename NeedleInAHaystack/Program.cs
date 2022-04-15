@@ -56,7 +56,7 @@ public static class Program
 
     public static int CountOccurencesOf(this string haystack, string needle)
     {
-        if (needle == "") throw new ArgumentException("Empty string is not allowed");
+        if (needle == "") throw new ArgumentException("Cannot count occurences of empty string");
         int nbrOfOccurences = 0;
         int nextOccurenceStart = haystack.IndexOf(needle, 0);
         while (nextOccurenceStart != -1)

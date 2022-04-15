@@ -130,4 +130,19 @@ public class ProgramTests
         "aaaaaaaaa".CountOccurencesOf("aaa")
                 .Should().Be(3);
     }
+
+    [Test]
+    public void Can_count_occurence_of_single_char_string()
+    {
+        "A brown bear".CountOccurencesOf("b")
+                .Should().Be(2);
+    }
+
+    [Test]
+    public void Should_throw_exception_when_passing_empty_string()
+    {
+        "A brown bear".Invoking(s => s.CountOccurencesOf(""))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Cannot count occurences of empty string");
+    }
 }
