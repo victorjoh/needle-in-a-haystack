@@ -32,6 +32,6 @@ dotnet run --project NeedleInAHaystack NeedleInAHaystack.Tests/resources/two-mat
 * We don't count overlapping matches, for example a file `aaa.txt` with contents
   `aaaaaa` counts as 2 matches, not 4.
 * For a file with an empty base filename, for example a file named `.txt`, we
-  return an error.
+  don't count anything. Instead we return an error.
 * We only support the following character encodings: uft8, utf16be and uft16le.
 * We have no performance constraints.
