@@ -47,9 +47,10 @@ public static class Program
                         $"The file '{Path.GetFullPath(path)}' does not have a base filename. Aborting.");
     }
 
-    private static int CountOccurences((BaseFilename, Contents) textFile) {
-         var (baseFilename, contents) = textFile;
-         return contents.CountOccurencesOf(baseFilename);
+    private static int CountOccurences((BaseFilename, Contents) textFile)
+    {
+        var (baseFilename, contents) = textFile;
+        return contents.CountOccurencesOf(baseFilename);
     }
 
     public static int CountOccurencesOf(this string haystack, string needle)
