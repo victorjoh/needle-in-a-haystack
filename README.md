@@ -28,6 +28,12 @@ You can run the program with your own input file, like we do below with the
 dotnet run --project NeedleInAHaystack NeedleInAHaystack.Tests/resources/two-matches.xml
 ```
 
+Alternatively, you can make a release build and then run the program:
+```
+dotnet publish -c release
+NeedleInAHaystack/bin/Release/net6.0/publish/NeedleInAHaystack NeedleInAHaystack.Tests/resources/two-matches.xml
+```
+
 ## Assumptions
 * We don't count overlapping matches, for example a file `aaa.txt` with contents
   `aaaaaa` counts as 2 matches, not 4.
