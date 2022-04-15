@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace NeedleInAHaystack;
+﻿namespace NeedleInAHaystack;
 
 using Contents = String;
 using FilePath = String;
@@ -56,7 +54,7 @@ public static class Program
 
     public static int CountOccurencesOf(this string haystack, string needle)
     {
-        Contract.Requires(needle != "");
+        if (needle == "") throw new ArgumentException("Empty string is not allowed");
         int nbrOfOccurences = 0;
         int nextOccurenceStart = haystack.IndexOf(needle, 0);
         while (nextOccurenceStart != -1)
@@ -76,7 +74,6 @@ sealed class Result<T>
 
     private Result(T value, bool success, string error)
     {
-        Contract.Requires(value != null || !success);
         this.value = value;
         this.success = success;
         this.error = error;
